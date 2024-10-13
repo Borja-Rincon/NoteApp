@@ -1,0 +1,33 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Listado de Notas
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="notes.length === 0" class="no-notes">
+    <ion-label>No existen notas guardadas</ion-label>
+  </div>
+
+  <ion-list *ngIf="notes.length > 0">
+    <div *ngFor="let note of notes" (click)="goToNoteDetails(note)">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{ note.title }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          {{ note.description }}
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-list>
+  
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="onAddButtonClick()" shape="round" color="primary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

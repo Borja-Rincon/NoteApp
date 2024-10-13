@@ -1,0 +1,37 @@
+.note-details-container {
+    padding: 16px;
+  }
+  
+  .note-label {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    display: block;
+  }
+  
+  .note-input {
+    margin-bottom: 16px;
+  }
+  
+  .note-textarea {
+    margin-bottom: 20px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .update-button,
+  .delete-button {
+    width: 48%;
+  }
+  
+  .delete-button {
+    background-color: red;
+    color: white;
+  }

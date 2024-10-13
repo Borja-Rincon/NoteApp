@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>noteDetails</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="note-details-container">
+    <h1 for="title" class="note-label">Título</h1>
+    <ion-input [(ngModel)]="note.title" (ionChange)="onFieldChange()" placeholder="Título de la nota" class="note-input"></ion-input>
+    <h2 for="description" class="note-label">Descripción</h2>
+    <ion-textarea [(ngModel)]="note.description" (ionChange)="onFieldChange()" placeholder="Descripción de la nota" class="note-textarea"></ion-textarea>
+  </div>
+  <div class="button-container">
+    <ion-button expand="block" [disabled]="!isModified" (click)="updateNote()" class="update-button">
+      Actualizar nota
+    </ion-button>
+
+    <ion-button expand="block" color="danger" (click)="presentDeleteAlert()" class="delete-button">
+      Eliminar nota
+    </ion-button>
+  </div>
+</ion-content>

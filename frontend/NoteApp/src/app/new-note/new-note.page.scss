@@ -1,0 +1,12 @@
+ion-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .button-container {
+    padding: 16px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
