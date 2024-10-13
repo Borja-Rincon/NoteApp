@@ -137,3 +137,17 @@ La parte de backend de la aplicación se ha construido utilizando **Express** pa
 - Leer Notas: Los usuarios pueden ver una lista de todas sus notas.
 - Actualizar Notas: Los usuarios pueden editar notas existentes.
 - Eliminar Notas: Los usuarios pueden eliminar notas que ya no necesiten.
+
+
+## Pruebas de API
+
+Puedes probar los endpoints de la API utilizando la colección de Postman disponible [aquí](https://api.postman.com/collections/38982068-a0fe5cfc-3887-440d-9c96-040cd35db19f?access_key=PMAT-01JA3WBEA1VXQVRJXW8CB7WPD4).
+
+
+### Endpoints
+
+- **GET** `/api/notes` - Obtener todas las notas.
+- **POST** `/api/notes` - Crear una nueva nota.
+- **GET** `/api/notes/:id` - Obtener una nota por ID.
+- **PUT** `/api/notes/:id` - Actualizar una nota por ID.
+- **DELETE** `/api/notes/:id` - Eliminar una nota por ID.
