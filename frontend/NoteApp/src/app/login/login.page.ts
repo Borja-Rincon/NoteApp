@@ -24,6 +24,11 @@ export class LoginPage {
       return;
     }
 
+    if(!this.validarEmail(this.email)) {
+      this.showToast('Por favor ingresa un email correcto');
+      return;
+    }
+
     this.authService.register(this.email, this.password).subscribe(
       (response: any) => {
         console.log('Usuario registrado:', response);
@@ -32,7 +37,13 @@ export class LoginPage {
       },
       (error) => {
         console.error('Error de registro:', error);
-        this.showToast('Error al registrar el usuario.');
+        if (error.status === 409) {
+          this.showToast('El email ya está registrado. Por favor, use otro email.');
+        } else if (error.status === 400) {
+          this.showToast('Datos de registro inválidos. Por favor, verifique la información.');
+        } else {
+          this.showToast('Error al registrar el usuario. Por favor, intente de nuevo.');
+        }
       }
     );
   }
@@ -40,6 +51,11 @@ export class LoginPage {
   login() {
     if (!this.email || !this.password) {
       this.showToast('Por favor ingresa todos los campos.');
+      return;
+    }
+
+    if(!this.validarEmail(this.email)) {
+      this.showToast('Por favor ingresa un email correcto');
       return;
     }
 
@@ -63,5 +79,10 @@ export class LoginPage {
       position: 'bottom',
     });
     toast.present();
+  }
+
+  validarEmail(email: string): boolean {
+    const regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    return regex.test(email);
   }
 }

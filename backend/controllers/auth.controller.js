@@ -30,6 +30,11 @@ exports.signup = (req, res) => {
                 });
             })
             .catch(err => {
+                if (err.name === 'SequelizeUniqueConstraintError') {
+                    return res.status(409).send({
+                        message: "Email already exists"
+                    });
+                }
                 res.status(500).send({
                     message: err.message || "Some error occurred while creating the user."
                 });
