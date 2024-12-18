@@ -12,7 +12,8 @@ exports.create = (req, res) =>  {
 
     const note = {
         title: req.body.title,
-        description: req.body.description
+        description: req.body.description,
+        filename: req.file ? req.file.filename : ""
     };
 
     Note.create(note)
@@ -48,6 +49,11 @@ exports.findOne = (req, res) => {
                     message: `Cannot find Note with id=${id}.`
                 });
             }
+
+            if (data.filename) {
+                data.imageUrl = `http://localhost:8080/images/${data.filename}`;
+            }
+
             res.send(data);
         })
         .catch(err => {
@@ -59,8 +65,18 @@ exports.findOne = (req, res) => {
 
 exports.update = (req, res) => {
     const id = req.params.id;
+    
+    const noteData = {
+        title: req.body.title,
+        description: req.body.description,
+        filename: req.file ? req.file.filename : undefined
+    };
 
-    Note.update(req.body, {
+    if (!req.file) {
+        delete noteData.filename;  
+    }
+
+    Note.update(noteData, {
         where: { id: id }
     })
     .then(num => {

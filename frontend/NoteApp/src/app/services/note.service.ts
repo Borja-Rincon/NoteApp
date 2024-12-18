@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,23 +11,55 @@ export class NoteService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getNotes() {
-    return this.httpClient.get(this.endpoint)
+  private getAuthToken(): string | null {
+    return localStorage.getItem('token');
   }
 
-  createNote(note: any) {
-    return this.httpClient.post(this.endpoint, note);
+  private createAuthHeaders() {
+    const token = this.getAuthToken();
+    let headers = new HttpHeaders();
+
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    return headers;
   }
 
-  getNoteByID(id: string) {
-    return this.httpClient.get(`${this.endpoint}/${id}`);
+  getNotes(): Observable<any> {
+    const headers = this.createAuthHeaders();
+    return this.httpClient.get(this.endpoint, { headers });
   }
 
-  updateNoteByID(id: string, note: any) {
-    return this.httpClient.put(`${this.endpoint}/${id}`, note);
+  createNote(note: any, blob: any): Observable<any> {
+    const headers = this.createAuthHeaders();
+    let formData = new FormData();
+    formData.append("title", note.title);
+    formData.append("description", note.description);
+    formData.append("file", blob);
+
+    return this.httpClient.post(this.endpoint, formData, { headers });
   }
 
-  deleteNoteByID(id: string) {
-    return this.httpClient.delete(`${this.endpoint}/${id}`);
+  getNoteByID(id: string): Observable<any> {
+    const headers = this.createAuthHeaders();
+    return this.httpClient.get(`${this.endpoint}/${id}`, { headers });
+  }
+
+  updateNoteByID(id: string, note: any, blob: any = null): Observable<any> {
+    const headers = this.createAuthHeaders();
+    let formData = new FormData();
+    formData.append("title", note.title);
+    formData.append("description", note.description);
+    if (blob) {
+      formData.append("file", blob);
+    }
+
+    return this.httpClient.put(`${this.endpoint}/${id}`, formData, { headers });
+  }
+
+  deleteNoteByID(id: string): Observable<any> {
+    const headers = this.createAuthHeaders();
+    return this.httpClient.delete(`${this.endpoint}/${id}`, { headers });
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NoteService } from '../services/note.service';
+import { PhotoService } from '../services/photo.service';
 import { AlertController, ToastController, NavController } from '@ionic/angular';
 
 @Component({
@@ -12,13 +13,15 @@ export class NoteDetailsPage implements OnInit {
 
   note: any = {};
   isModified = false;
+  capturedPhoto: string = "";
 
   constructor(
     private route: ActivatedRoute,
     private noteServices: NoteService,
     private alertController: AlertController,
     private toastController: ToastController,
-    private navController: NavController
+    private navController: NavController,
+    private photoService: PhotoService
   ) {}
 
   ngOnInit() {
@@ -30,9 +33,28 @@ export class NoteDetailsPage implements OnInit {
     }
   }
 
+  takePhoto() {
+    this.photoService.takePhoto().then(data => {
+      this.capturedPhoto = data.webPath? data.webPath : "";
+      this.isModified = true;
+    });
+  }
+
+  pickImage() {
+    this.photoService.pickImage().then(data => {
+      console.log("data: ", data.webPath); 
+      this.capturedPhoto = data.webPath;
+      this.isModified = true;
+    });
+  }
+
   getNoteByID(id: string) {
     this.noteServices.getNoteByID(id).subscribe(response => {
       this.note = response;
+      
+      if (this.note.filename) {
+        this.note.imageUrl = `http://localhost:8080/images/${this.note.filename}`;
+      }
     });
   }
 
@@ -41,7 +63,18 @@ export class NoteDetailsPage implements OnInit {
   }
 
   async updateNote() {
-    this.noteServices.updateNoteByID(this.note.id, this.note).subscribe(async response => {
+    const updatedNote = {
+      title: this.note.title,
+      description: this.note.description,
+    };
+
+    let imageBlob: any = null;
+    if (this.capturedPhoto != "") {
+      const response = await fetch(this.capturedPhoto);
+      imageBlob = await response.blob();
+    }
+
+    this.noteServices.updateNoteByID(this.note.id, updatedNote, imageBlob).subscribe(async response => {
       this.isModified = false;
 
       const toast = await this.toastController.create({
@@ -51,8 +84,7 @@ export class NoteDetailsPage implements OnInit {
       });
 
       await toast.present();
-
-      this.navController.pop()
+      this.navController.pop();
     });
   }
 
@@ -79,7 +111,7 @@ export class NoteDetailsPage implements OnInit {
       ]
     });
 
-    await alert.present();  // Mostrar el alert
+    await alert.present();
   }
 
   deleteNote() {

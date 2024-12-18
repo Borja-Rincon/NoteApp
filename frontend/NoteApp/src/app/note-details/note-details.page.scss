@@ -35,3 +35,17 @@
     background-color: red;
     color: white;
   }
+
+  .image-container {
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+    .image-container img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }

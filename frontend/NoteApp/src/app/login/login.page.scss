@@ -1,0 +1,17 @@
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    height: 100%;
+  }
+  
+  .button-group {
+    margin-top: 20px;
+  }
+  
+  ion-button {
+    margin-top: 10px;
+    width: 100%;
+  }
