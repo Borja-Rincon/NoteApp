@@ -143,7 +143,7 @@ La parte de backend de la aplicación se ha construido utilizando **Express** pa
 
 ## Pruebas de API
 
-Puedes probar los endpoints de la API utilizando la colección de Postman disponible [aquí](https://api.postman.com/collections/38982068-a0fe5cfc-3887-440d-9c96-040cd35db19f?access_key=PMAT-01JA3WBEA1VXQVRJXW8CB7WPD4).
+Puedes probar los endpoints de la API utilizando la colección de Postman disponible [aquí](https://web.postman.co/workspace/NoteApp~759c3e97-8f6a-432a-a8d9-82ff9d59b0b5?collection=38982068-4d0100ad-ca3f-49ee-9a11-6438d9434651&target=link).
 
 
 ### Endpoints
