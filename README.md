@@ -137,6 +137,8 @@ La parte de backend de la aplicación se ha construido utilizando **Express** pa
 - Leer Notas: Los usuarios pueden ver una lista de todas sus notas.
 - Actualizar Notas: Los usuarios pueden editar notas existentes.
 - Eliminar Notas: Los usuarios pueden eliminar notas que ya no necesiten.
+- SignUp: Los usuarios pueden crear una cuenta para logear en la aplicación.
+- Login: Los usuarios pueden logear en la aplicación con una cuenta previamente creada.
 
 
 ## Pruebas de API
@@ -151,3 +153,5 @@ Puedes probar los endpoints de la API utilizando la colección de Postman dispon
 - **GET** `/api/notes/:id` - Obtener una nota por ID.
 - **PUT** `/api/notes/:id` - Actualizar una nota por ID.
 - **DELETE** `/api/notes/:id` - Eliminar una nota por ID.
+- **POST** `/api/auth/signup` - Crear usuario.
+- **POST** `/api/auth/login` - Logear con el usuario.
